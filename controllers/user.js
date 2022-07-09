@@ -1,20 +1,9 @@
-/*
-  Package de chiffrement bcrypt.
-    Source: https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466506-creez-des-utilisateurs
-*/
+// Importation.
 const bcrypt = require('bcrypt');
-
-/*
-  Package de gestion des tokens JSON.
-    Source: https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466557-creez-des-tokens-dauthentification
-*/
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
-/*
-  Exportation des méthodes et attribution aux routes.
-   Source: https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466459-optimisez-la-structure-du-back-end
-*/
+// Créer un compte.
 exports.signup = (req, res, next) => {
   // Salage du mot de passe 10 fois.
     bcrypt.hash(req.body.password, 10)
@@ -30,8 +19,9 @@ exports.signup = (req, res, next) => {
     .catch(error => res.status(500).json({ error }));
 };
 
+// S'identifier.
 exports.login = (req, res, next) => {
-    User.findOne({ email: req.body.email })// Mongoose vérifie que le mail existe dans la BDD.
+    User.findOne({ email: req.body.email })
       .then(user => {
         if (!user) {
           return res.status(401).json({ error: "Utilisateur non trouvé" });

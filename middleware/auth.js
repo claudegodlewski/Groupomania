@@ -1,7 +1,4 @@
-/*
-  Package de création et de vérification de tokens d'authentification.
-    Source: https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466557-creez-des-tokens-dauthentification
-*/
+// Importation.
 const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {

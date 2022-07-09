@@ -1,25 +1,21 @@
-// Importation du modèle des posts.
+// Importation.
 const Post = require('../models/post');
 const fs = require('fs');
 
-/*
-  Exportation des méthodes et attribution aux routes.
-   Source: https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466459-optimisez-la-structure-du-back-end
-*/
-
-// Création d'un post.
+// Ecrire un message.
 exports.createPost = (req, res, next) => {
   const postObject = JSON.parse(req.body.post);
   delete postObject._id;
   const post = new Post({
     ...postObject,
-    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    //imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
   });
   post.save()
     .then(() => res.status(201).json({ message: "Post enregistré"}))
     .catch(error => res.status(400).json({ error }));
 };
 
+// Afficher tout les messages.
 exports.getAllPosts = (req, res, next) => {
   Post.find().then(
     (sauces) => {
@@ -34,7 +30,7 @@ exports.getAllPosts = (req, res, next) => {
   );
 };
 
-// Afficher un post.
+// Afficher un message.
 exports.getOnePost = (req, res, next) => {
   Post.findOne({
     _id: req.params.id
@@ -51,19 +47,18 @@ exports.getOnePost = (req, res, next) => {
   );
 };
 
-// Modification d'un post.
+// Modifier un message.
 exports.modifyPost = (req, res, next) => {
 
-  // Suppression de l'ancienne image en cas de modification.
   if (req.file) {
 
     Post.findOne({ _id: req.params.id }).then((post) => {
 
-      const nomPost = post.imageUrl.split('/images/')[1];
+      // const nomPost = post.imageUrl.split('/images/')[1];
 
-      fs.unlink(`images/${nomPost}`,
-        (err) => {if (err) console.log(err);}
-      );
+      // fs.unlink(`images/${nomPost}`,
+      //   (err) => {if (err) console.log(err);}
+      // );
 
     });
 
@@ -79,21 +74,21 @@ exports.modifyPost = (req, res, next) => {
     .catch(error => res.status(400).json({ error }));
 };
 
-// Suppression d'un post.
+// Supprimer un message.
 exports.deletePost = (req, res, next) => {
   Post.findOne({ _id: req.params.id })
     .then(post => {
-      const filename = post.imageUrl.split('/images/')[1];
-      fs.unlink(`images/${filename}`, () => {
-        Post.deleteOne({ _id: req.params.id })
-          .then(() => res.status(200).json({ message: "Post supprimé"}))
-          .catch(error => res.status(400).json({ error }));
-      });
+      // const filename = post.imageUrl.split('/images/')[1];
+      // fs.unlink(`images/${filename}`, () => {
+      //   Post.deleteOne({ _id: req.params.id })
+      //     .then(() => res.status(200).json({ message: "Post supprimé"}))
+      //     .catch(error => res.status(400).json({ error }));
+      // });
     })
     .catch(error => res.status(500).json({ error }));
 };
 
-// Aimer un post.
+// Aimer des messages.
 exports.likePost = function (request, response, next) {
   Post.findOne({ _id: request.params.id })
     .then(function (post) {
