@@ -1,10 +1,10 @@
-// Importation.
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
-// Modèle.
 const userSchema = mongoose.Schema({
-  email: { type: String, required: true, unique: true },
+  systemAdministrator: { type: Boolean,required: false},
+  systemUser: { type: String, required: true },
+  email: { type: String, required: true, unique: true }, 
   password: { type: String, required: true }
 });
 
