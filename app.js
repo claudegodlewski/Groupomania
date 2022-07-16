@@ -1,26 +1,17 @@
-// Importation.
 const express = require('express');
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const Post = require("./models/post");
-const postsRoutes = require('./routes/posts');
 const userRoutes = require('./routes/user');
+const postRoutes = require('./routes/post');
 const path = require('path');
 const env = require('dotenv').config();
-const helmet = require('helmet');
 
-// Création de l'application express.
 const app = express();
 
-// Base de données / Database.
 mongoose.connect(`mongodb+srv://${process.env.User}:${process.env.Password}@${process.env.Cluster}.mongodb.net/?retryWrites=true&w=majority`,
-  { useNewUrlParser: true,
-    useUnifiedTopology: true })
-  .then(() => console.log('Connexion à MongoDB réussie !'))
-  .catch(() => console.log('Connexion à MongoDB échouée !'));
-
-app.use(helmet({
-    crossOriginResourcePolicy: false,
-  }));
+  { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('Connexion à MongoDB réussie !'))
+    .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -29,12 +20,10 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.json());
+app.use(bodyParser.json());
 
-// Routes / Endpoints.
-//app.use('/images', express.static(path.join(__dirname, 'images')));
-app.use('/api/posts', postsRoutes);
+app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/auth', userRoutes);
+app.use('/api/post', postRoutes);
 
-// Exportation.
 module.exports = app;
