@@ -1,37 +1,39 @@
-// Importation.
-const Post = require('../models/post');
+const Post = require ('../models/post');
+const User = require('../models/user');
 const fs = require('fs');
+const jwt = require('jsonwebtoken');
+const env = require('dotenv').config();
 
-// Ecrire un message.
-exports.createPost = (req, res, next) => {
-  const postObject = JSON.parse(req.body.post);
+exports.postMessage = (req, res, next) => {
+  const postObject = { ...req.body };
   delete postObject._id;
   const post = new Post({
     ...postObject,
-    //imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+    likes: 0,
+    usersLiked: [],
   });
   post.save()
-    .then(() => res.status(201).json({ message: "Post enregistré"}))
+    .then(() => res.status(201).json({ message: 'Message posté.'}))
     .catch(error => res.status(400).json({ error }));
 };
 
-// Afficher tout les messages.
-exports.getAllPosts = (req, res, next) => {
-  Post.find().then(
-    (sauces) => {
-      res.status(200).json(sauces);
-    }
-  ).catch(
-    (error) => {
-      res.status(400).json({
-        error: error
-      });
-    }
-  );
-};
+exports.getAllMessages = (req, res, next) => {
+  const sort = { _id: -1}
+    Post.find().sort(sort).then(
+      (posts) => {
+        res.status(200).json(posts);
+      }
+    ).catch(
+      (error) => {
+        res.status(400).json({
+          error: error
+        });
+      }
+    );
+}
 
-// Afficher un message.
-exports.getOnePost = (req, res, next) => {
+exports.getOneMessage = (req, res, next) => {
   Post.findOne({
     _id: req.params.id
   }).then(
@@ -45,102 +47,87 @@ exports.getOnePost = (req, res, next) => {
       });
     }
   );
-};
+}
 
-// Modifier un message.
-exports.modifyPost = (req, res, next) => {
+exports.modifyMessage = (req, res, next) => {
+  const token = req.headers.authorization.split(' ')[1];
+  const decodedToken = jwt.verify(token, process.env.secretToken);
+  const idOfTheUser = decodedToken.userId;
+  Post.findOne({ _id: req.params.id }).then((a)=>{
 
-  if (req.file) {
+    User.findOne({
+      _id: idOfTheUser
+    }).then((b) => {
 
-    Post.findOne({ _id: req.params.id }).then((post) => {
+      if (b.systemAdministrator == true || a.userId == idOfTheUser) {
 
-      // const nomPost = post.imageUrl.split('/images/')[1];
+        if (req.file) {
 
-      // fs.unlink(`images/${nomPost}`,
-      //   (err) => {if (err) console.log(err);}
-      // );
+          Post.findOne({ _id: req.params.id }).then((post) => {
+      
+            const nomMessage = post.imageUrl.split('/images/')[1];
+      
+            fs.unlink(`images/${nomMessage}`,
+              (err) => {if (err) console.log(err);}
+            );
+      
+          });
+      
+        }
 
-    });
+        const postObject = req.file ?
+          {
+            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+          } : { ...req.body };
+        Post.updateOne({ _id: req.params.id }, { ...postObject, _id: req.params.id })
+          .then(() => res.status(200).json({ message: 'Message modifié.'}))
+          .catch(error => res.status(400).json({ error }));
 
-  }
-
-  const postObject = req.file ?
-    {
-      ...JSON.parse(req.body.post),
-      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-    } : { ...req.body };
-  Post.updateOne({ _id: req.params.id }, { ...postObject, _id: req.params.id })
-    .then(() => res.status(200).json({ message: "Post modifiée"}))
-    .catch(error => res.status(400).json({ error }));
-};
-
-// Supprimer un message.
-exports.deletePost = (req, res, next) => {
-  Post.findOne({ _id: req.params.id })
-    .then(post => {
-      // const filename = post.imageUrl.split('/images/')[1];
-      // fs.unlink(`images/${filename}`, () => {
-      //   Post.deleteOne({ _id: req.params.id })
-      //     .then(() => res.status(200).json({ message: "Post supprimé"}))
-      //     .catch(error => res.status(400).json({ error }));
-      // });
-    })
-    .catch(error => res.status(500).json({ error }));
-};
-
-// Aimer des messages.
-exports.likePost = function (request, response, next) {
-  Post.findOne({ _id: request.params.id })
-    .then(function (post) {
-      switch (request.body.like) {
-        // Scénario 1: post aimé.
-        case 1:
-          if (
-            !post.usersLiked.includes(request.body.userId) &&
-            request.body.like === 1
-          ) {
-            // MAJ base de donnée.
-            Post.updateOne(
-              { _id: request.params.id },
-              { $inc: { likes: 1 }, // $inc: incrémentation du champ "likes" (1 dans la BDD).
-                $push: { usersLiked: request.body.userId } // $push: ajout du 'userId' dans le champs "usersLiked" de la BDD.
-              }
-            )
-              .then(function () {
-                response
-                  .status(201)
-                  .json({ message: "La post a été aimé" });
-              })
-              .catch(function (error) {
-                response.status(400).json({ error: error });
-              });
-          }
-          break;
-
-        // Scénario 2: annulation.
-        case 0:
-             if (post.usersLiked.includes(request.body.userId)) {
-
-            // MAJ base de donnée.
-            Post.updateOne(
-              { _id: request.params.id },
-              
-              
-              {
-                $inc: { likes: -1 }, // $inc: décrémentation du champs "likes" (-1 dans la BDD).
-                $pull: { usersLiked: request.body.userId } // $pull: suppression de l'userId du champ "usersLiked" dans la BDD.
-              }
-            )
-              .then(function () {
-                response
-                  .status(201)
-                  .json({ message: "Annulation" });
-              })
-              .catch(function (error) {
-                response.status(400).json({ error: error });
-              });
-          }
-          break;
       }
+
+      else {
+
+        res.status(403).json({ message: "Non autorisé"})
+
+      }
+
+    }).catch(error => res.status(400).json({ error }));
+
+  })
+};
+
+exports.deleteMessage = (req, res, next) => {
+  const token = req.headers.authorization.split(' ')[1];
+  const decodedToken = jwt.verify(token, process.env.secretToken);
+  const idOfTheUser = decodedToken.userId;
+    Post.findOne({ _id: req.params.id }).then((a)=>{
+      User.findOne({
+        _id: idOfTheUser
+      }).then((b) => {
+        if (a.userId == idOfTheUser || b.systemAdministrator == true) {
+            Post.findOne({ _id: req.params.id })
+            .then(post => {
+              const filename = post.imageUrl.split('/images/')[1];
+              fs.unlink(`images/${filename}`, () => {
+                Post.deleteOne({ _id: req.params.id })
+                  .then(() => res.status(200).json({ message: 'Message supprimé.'}))
+                  .catch(error => res.status(400).json({ error }));
+              });
+          })
+          .catch(error => res.status(400).json({ error }));
+        } else {
+          res.status(403).json({ message: "Non autorisé."})
+        }
+      })
     })
 };
+
+exports.likeMessage = (req, res, next) => {
+  let likes = req.body.likes
+  let userId = req.body.userId
+  let postId = req.params.id
+
+  Post.updateOne({ _id: postId }, { $push: { usersLiked: userId }, $inc: { likes: +1 }}) 
+    .then(() => res.status(200).json({ message: 'Like.' }))
+    .catch((error) => res.status(400).json({ error }))
+}
