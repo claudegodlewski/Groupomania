@@ -76,8 +76,8 @@ $color-primary : #FD2D01;
   margin: 30px;
   width: 500px;
   border-radius: 25px;
-  border: 5px;
-  border-style: dashed;
+  border: 4px;
+  border-style: solid;
   border-color: #FFD7D7;
 }
 form {

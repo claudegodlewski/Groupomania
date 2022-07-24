@@ -177,8 +177,8 @@ export default {
   font-family: Lato, sans-serif;
   margin: 20px 10px;
   width: 850px;
-  border: 5px;
-  border-style: dashed;
+  border: 4px;
+  border-style: solid;
   border-color: #FFD7D7;
 .cardHeader {
   display: flex;
