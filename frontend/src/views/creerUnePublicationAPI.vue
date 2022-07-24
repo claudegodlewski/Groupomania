@@ -139,8 +139,8 @@ h3 {
   width: 550px;
   display: flex;
   flex-direction: column;
-  border: 5px;
-  border-style: dashed;
+  border: 4px;
+  border-style: solid;
   border-color: #FFD7D7;
 .postSystemUser {
   font-family: Lato, sans-serif;
