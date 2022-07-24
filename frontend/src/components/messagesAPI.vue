@@ -3,24 +3,9 @@
 import Axios from 'axios';
 import Vue from 'vue';
 
-/* import the fontawesome core */
-import { library } from '@fortawesome/fontawesome-svg-core';
-
-/* import font awesome icon component */
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-
-// eslint-disable-next-line object-curly-newline
-import { faThumbsUp, faPen, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-
-library.add(faThumbsUp, faPen, faTrashCan);
-
 Vue.config.productionTip = false;
 
 export default {
-  name: 'messagesAPI',
-  components: {
-    'font-awesome-icon': FontAwesomeIcon,
-  },
   // eslint-disable-next-line object-shorthand
   data: function () {
     return {
@@ -105,7 +90,7 @@ export default {
           console.log(err);
         });
     },
-    verifierSiMembresAiment(post) {
+    verifierSiLike(post) {
       const user = JSON.parse(localStorage.getItem('Utilisateur'));
       console.log('post', post);
       console.log('Utilisateur', user.userId);
@@ -144,30 +129,27 @@ export default {
     <article class="card" v-for="post in posts" :key="post._id">
       <header class="cardHeader">
         <p class="cardSystemUser">
-          Auteur: {{ post.systemUser }}
+          {{ post.systemUser }}
         </p>
         <p class="cardDateHeure">
-          Date: {{ post.dateHeure }}
+          {{ post.dateHeure }}
         </p>
       </header>
       <p class="cardContent" v-show="post.text">{{ post.text }}</p>
       <img :src="post.imageUrl" alt= 'Image postée' class= "cardPicture"/>
       <footer>
-        <div>
-          <button class="like">
-            <font-awesome-icon icon="fa-thumbs-up" class="like"
-            v-if="verifierSiMembresAiment(post)"
-            @click="likePost(post)"/>
+        <span class="likesNombre">{{post.likes}} likes</span>
+          <button class="aimerMessage" v-if="verifierSiLike(post)" @click="likePost(post)">
+          J'aime
           </button>
-          <span class="likeTexte">Likes: {{post.likes}} </span>
-        </div>
-        <div class="icons" v-if="userId == post.userId || systemAdministrator">
-          <router-link :to="{name:'modifierLaPublicationAPI', params: {id:post._id} }">
-            <font-awesome-icon icon="fa-pen" class="modifier"/>
-          </router-link>
-          <font-awesome-icon icon="fa-trash-can" @click="deletePost(post)"
-          class="effacer"/>
-        </div>
+            <button class="modifierMessage" v-if="userId == post.userId || systemAdministrator">
+              <router-link :to="{name:'modifierLaPublicationAPI', params: {id:post._id} }">
+              Modifier
+              </router-link>
+            </button>
+              <button class="supprimerMessage" @click="deletePost(post)">
+                Supprimer
+              </button>
       </footer>
     </article>
   </div>
@@ -235,28 +217,54 @@ export default {
   border-radius: 0px;
 }
 }
-.likeTexte {
+.aimerMessage {
   background-color: white;
-  border:0px;
+  border: 0px;
+  color:#FD2D01;
+  position: static;
+  margin: 5px;
+  font-weight: bold;
+  font-family: Lato, Helvetica, Arial, sans-serif;
+}
+.likesNombre {
+  background-color: white;
+  border: 0px;
   color:#000000;
-  margin:0px;
   position: static;
+  margin: 5px;
+  font-weight: normal;
+  font-family: Lato, Helvetica, Arial, sans-serif;
 }
-.like {
+.modifierMessage {
   background-color: white;
-  border:0px;
-  color:#FD2D01;
+  border: 0px;
   position: static;
-  margin:0px;
+  margin: 5px;
+  font-weight: bold;
+  font-family: Lato, Helvetica, Arial, sans-serif;
+    a:link {
+    text-decoration: none;
+    }
+    a:link{
+      color:#FD2D01;
+    }
+    a:visited{
+      color:#FD2D01;
+    }
+    a:focus{
+      color:#FD2D01;
+    }
+    a:active{
+      color:#FD2D01;
+    }
 }
-.modifier {
+.supprimerMessage {
+  background-color: white;
+  border: 0px;
   color:#FD2D01;
   position: static;
-  margin-right:5px;
-}
-.effacer {
-  color:#FD2D01;
-  position: static;
-  margin-left:5px;
+  margin: 5px;
+  font-weight: bold;
+  font-family: Lato, Helvetica, Arial, sans-serif;
 }
 </style>
