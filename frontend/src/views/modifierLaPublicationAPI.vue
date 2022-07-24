@@ -145,8 +145,8 @@ h3 {
   display: flex;
   flex-direction: column;
   border-radius: 25px;
-  border: 5px;
-  border-style: dashed;
+  border: 4px;
+  border-style: solid;
   border-color: #FFD7D7;
 textarea {
   background-color: #FFD7D7;
@@ -204,5 +204,6 @@ textarea {
 .parcourirBouton {
   background-color: #FFD7D7;
   width:270px;
+  border-radius: 5px;
 }
 </style>
