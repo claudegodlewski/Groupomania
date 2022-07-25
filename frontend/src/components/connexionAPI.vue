@@ -34,7 +34,7 @@ export default {
               localStorage.setItem('Utilisateur', JSON.stringify(objectUser)); // Stockage du token, UserId etc.
               this.$store.dispatch('setRole', response.data.systemAdministrator);
             }
-            this.$router.push('/home'); // Redirection vers l'accueil après validation du login ('/home').
+            this.$router.push('/home'); // Redirection vers l'accueil (mur des messages) après validation du login ('/home').
           })
           .catch((error) => {
             this.loading = false;
