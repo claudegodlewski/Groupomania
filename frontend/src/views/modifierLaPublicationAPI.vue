@@ -101,8 +101,8 @@ export default {
               <input class="parcourirBouton" type="file"
               @change="fileSelection" ref="file" id="file" name="image"
               accept=".jpg, .jpeg, .gif, .png"  aria-label="modifier l'image"/>
-                <img v-show="imageUrl" class="effetPhotoUploadee" :src="imageUrl"
-                alt="picture"/>
+                <!-- <img v-show="imageUrl" class="effetPhotoUploadee" :src="imageUrl"
+                alt="picture"/> -->
           </section>
             <footer class="editPied">
               <button class="validerBouton" @click="localStorageUpdateImage">
