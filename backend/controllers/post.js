@@ -129,8 +129,13 @@ exports.deleteMessage = (req, res, next) => {
 };
 
 exports.likeMessage = (req, res, next) => {
-
-  Post.updateOne({ _id: req.params.id }, { $push: { usersLiked: req.body.userId }, $inc: { likes: +1 }}) 
-    .then(() => res.status(200).json({ message: 'Like.' }))
-    .catch((error) => res.status(400).json({ error }))
+  // MAJ base de donnée.
+  Post.updateOne(
+    { _id: req.params.id }, 
+    { $inc: { likes: 1 }, // $inc: incrémentation du champ "likes" (1 dans la BDD).
+      $push: { usersLiked: req.body.userId } // $push: ajout du 'userId' dans le champs "usersLiked" de la BDD.
+    }
+  )
+    .then(() => res.status(200).json({ message: 'La publication a été aimée.' }))
+    .catch((error) => res.status(400).json({ error: error }))
 }
