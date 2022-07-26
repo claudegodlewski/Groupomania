@@ -5,18 +5,19 @@ import Axios from 'axios';
 export default {
   data() { // Espace de stockage de données simple.
     return {
-      systemUser: '',
+      // Valeur des champs du formulaire par défaut.
+      systemUser: '', // Pseudo de l'utilisateur.
       email: '',
       password: '',
-      error: false,
-      errorMsg: '',
+      error: false, // Status de l'erreur.
+      errorMsg: '', // Message à affichier en cas d'erreur.
     };
   },
   methods: { // Mise à disposition de la fonction signupUtilisateur.
     signupUtilisateur() {
       if (this.systemUser === '' || this.email === '' || this.password === '') {
         this.error = true;
-        this.errorMsg = 'Veuillez renseigner tous les champs.';
+        this.errorMsg = 'Erreur: veuillez remplir tous les champs.';
       } else {
         this.error = false;
         this.errorMsg = '';
@@ -45,17 +46,17 @@ export default {
     <form class="form" action="/" method="post">
       <div>
           <label htmlFor="systemUser">Nom d'utilisateur:
-            <input type="text" id="systemUser" name="user_pseudo" v-model="systemUser">
+            <input type="text" id="systemUser" name="systemUser" v-model="systemUser">
           </label>
       </div>
       <div>
           <label htmlFor="mail">E-mail:
-            <input type="email" id="email" name="user_mail" v-model="email">
+            <input type="email" id="email" name="email" v-model="email">
           </label>
       </div>
       <div>
           <label htmlFor="password">Mot de passe:
-            <input type="password" id="password" name="user_password" v-model="password">
+            <input type="password" id="password" name="password" v-model="password">
           </label>
       </div>
       <div v-show="error" class="error">{{ errorMsg }}</div>

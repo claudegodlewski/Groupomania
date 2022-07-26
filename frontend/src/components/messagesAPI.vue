@@ -60,7 +60,6 @@ export default {
         // eslint-disable-next-line prefer-template
         .get('http://localhost:3000/api/post/' + post._id, header)
         .then((res) => {
-          console.log('');
           console.log(res);
           // eslint-disable-next-line  prefer-arrow-callback
           this.$router.push({ name: 'EditPage' });
@@ -92,8 +91,6 @@ export default {
     },
     verifierSiLike(post) {
       const user = JSON.parse(localStorage.getItem('Utilisateur'));
-      console.log('post', post);
-      console.log('Utilisateur', user.userId);
       if (post.usersLiked.includes(user.userId)) {
         return false;
       }

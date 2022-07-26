@@ -1,14 +1,16 @@
 <!-- # Création d'une publication: récupération localstorage + envoi vers backend # -->
 <script>
 import Axios from 'axios';
+// Importation du composant "publicationDeconnexionEntete".
 import publicationDeconnexionEntete from '../components/publicationDeconnexionEntete.vue';
 
-const date = new Date(); // Récupération de la date + heure.
-const dateHeureFormatSimple = date.toLocaleString(); // Affichage dans un format simple.
+const date = new Date(); // Récupération de la date.
+const dateHeureFormatSimple = date.toLocaleString('fr', { day: '2-digit', month: '2-digit', year: 'numeric' }); // Affichage dans un format simple.
 
 export default {
   name: 'publicationDeconnexionEntete',
   components: {
+    // Enregistrement d'un composant via la propriété "components"
     'publication-deconnexion-entete': publicationDeconnexionEntete,
   },
   data() {
@@ -30,17 +32,17 @@ export default {
     },
     murCreation() {
       const user = JSON.parse(localStorage.getItem('Utilisateur'));
-      const myForm = new FormData();
+      const formData = new FormData();
       const AccessToken = user.token;
       // eslint-disable-next-line prefer-template
       const header = { headers: { Authorization: 'Bearer ' + AccessToken } };
-      myForm.append('systemUser', user.systemUser);
-      myForm.append('userId', user.userId);
-      myForm.append('dateHeure', this.dateHeure);
-      myForm.append('text', this.text);
-      myForm.append('image', this.selectedFile);
+      formData.append('systemUser', user.systemUser);
+      formData.append('userId', user.userId);
+      formData.append('dateHeure', this.dateHeure);
+      formData.append('text', this.text);
+      formData.append('image', this.selectedFile);
       Axios
-        .post('http://localhost:3000/api/post/', myForm, header)
+        .post('http://localhost:3000/api/post/', formData, header)
         .then(() => {
           // eslint-disable-next-line no-restricted-globals
           this.$router.push('/home');
@@ -66,6 +68,7 @@ export default {
 
 <template>
   <div class="content">
+    <!-- Utilisation du composant "publicationDeconnexionEntete" (voir ligne 12) -->
     <publication-deconnexion-entete></publication-deconnexion-entete>
     <div class="container">
       <h3>Créer une publication:</h3>

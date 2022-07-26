@@ -5,8 +5,9 @@ import Axios from 'axios';
 export default {
   data() { // Espace de stockage de données simple.
     return {
-      error: false,
-      errorMsg: '',
+      // Valeur des champs du formulaire par défaut.
+      error: false, // Status de l'erreur.
+      errorMsg: '', // Message à afficher en cas d'erreur.
       email: '',
       password: '',
     };
@@ -15,7 +16,7 @@ export default {
     loginUtilisateur() {
       if (this.email === '' || this.password === '') {
         this.error = true;
-        this.errorMsg = 'Les champs ne sont pas tous renseignés.';
+        this.errorMsg = 'Erreur: veuillez remplir tous les champs.';
       } else {
         this.error = false;
         this.errorMsg = '';
@@ -24,15 +25,15 @@ export default {
             email: this.email,
             password: this.password,
           })
-          .then((response) => {
-            if (response.data.token) {
+          .then((response) => { // Création d'un objet à partir de la réponse.
+            if (response.data.token) { // Si token -> pseudo + token + id utilisateur -> objectUser.
               const objectUser = {
                 systemUser: response.data.systemUser,
                 token: response.data.token,
                 userId: response.data.userId,
               };
-              localStorage.setItem('Utilisateur', JSON.stringify(objectUser)); // Stockage du token, UserId etc.
-              this.$store.dispatch('setRole', response.data.systemAdministrator);
+              localStorage.setItem('Utilisateur', JSON.stringify(objectUser)); // Stockage du token, UserId dans LocaStorage etc.
+              this.$store.dispatch('setRole', response.data.systemAdministrator); // Propagation de l'action depuis le composant.
             }
             this.$router.push('/home'); // Redirection vers l'accueil (mur des messages) après validation du login ('/home').
           })
@@ -53,12 +54,12 @@ export default {
     <form class="form" action="/" method="post">
       <div>
           <label htmlFor="mail">E-mail:
-            <input type="email" id="email" name="user_mail" v-model="email">
+            <input type="email" id="email" name="email" v-model="email">
           </label>
       </div>
       <div>
           <label htmlFor="password">Mot de passe:
-            <input type="password" id="password" name="user_password" v-model="password">
+            <input type="password" id="password" name="password" v-model="password">
           </label>
       </div>
       <div v-show="error" class="error">{{ errorMsg }}</div>

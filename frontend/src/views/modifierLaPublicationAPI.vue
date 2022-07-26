@@ -27,7 +27,6 @@ export default {
       const user = JSON.parse(localStorage.getItem('Utilisateur'));
       this.userId = user.userId;
     },
-    // Vuex.
     gettersSystemAdministrator() {
       return this.$store.getters.systemAdministrator;
     },
@@ -38,15 +37,15 @@ export default {
     },
     localStorageUpdateText() { // Remplacement du texte.
       const user = JSON.parse(localStorage.getItem('Utilisateur'));
-      const myForm = new FormData();
+      const formData = new FormData();
       const AccessToken = user.token;
       // eslint-disable-next-line prefer-template
       const header = { headers: { Authorization: 'Bearer ' + AccessToken } };
-      myForm.append('text', this.editedText);
+      formData.append('text', this.editedText);
 
       Axios
         // eslint-disable-next-line prefer-template
-        .put('http://localhost:3000/api/post/' + this.$route.params.id, myForm, header)
+        .put('http://localhost:3000/api/post/' + this.$route.params.id, formData, header)
         .then((response) => {
           console.log(response.data.message);
           // eslint-disable-next-line no-restricted-globals
@@ -58,15 +57,15 @@ export default {
     },
     localStorageUpdateImage() { // Remplacement de l'image.
       const user = JSON.parse(localStorage.getItem('Utilisateur'));
-      const myForm = new FormData();
+      const formData = new FormData();
       const AccessToken = user.token;
       // eslint-disable-next-line prefer-template
       const header = { headers: { Authorization: 'Bearer ' + AccessToken } };
-      myForm.append('image', this.file);
+      formData.append('image', this.file);
 
       Axios
         // eslint-disable-next-line prefer-template
-        .put('http://localhost:3000/api/post/' + this.$route.params.id, myForm, header)
+        .put('http://localhost:3000/api/post/' + this.$route.params.id, formData, header)
         .then((response) => {
           console.log(response.data.message);
           // eslint-disable-next-line no-restricted-globals
@@ -93,7 +92,7 @@ export default {
             <textarea v-model="editedText" type="text" aria-label="titre du post"/>
               <footer class="editPied">
                 <button class="validerBouton" @click="localStorageUpdateText">
-                  Je remplace mon texte
+                  Je remplace le texte
                 </button>
               </footer>
         </section>
@@ -107,7 +106,7 @@ export default {
           </section>
             <footer class="editPied">
               <button class="validerBouton" @click="localStorageUpdateImage">
-                Je remplace mon image
+                Je remplace l'image
               </button>
             </footer>
       </div>
