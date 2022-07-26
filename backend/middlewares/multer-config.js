@@ -1,3 +1,7 @@
+/*
+  Utilisation du package Multer pour la gestion de fichiers.
+    Source: https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466627-acceptez-les-fichiers-entrants-avec-multer
+*/
 const multer = require('multer');
 
 const MIME_TYPES = {

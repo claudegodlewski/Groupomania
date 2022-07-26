@@ -1,9 +1,14 @@
+// Importation du modèle des modèles.
 const Post = require ('../models/post');
 const User = require('../models/user');
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const env = require('dotenv').config();
 
+/*
+  Exportation des méthodes et attribution aux routes.
+   Source: https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466459-optimisez-la-structure-du-back-end
+*/
 exports.postMessage = (req, res, next) => {
   const postObject = { ...req.body };
   delete postObject._id;
@@ -61,6 +66,7 @@ exports.modifyMessage = (req, res, next) => {
 
       if (b.systemAdministrator == true || a.userId == idOfTheUser) {
 
+        // Suppression de l'ancienne image en cas de modification.
         if (req.file) {
 
           Post.findOne({ _id: req.params.id }).then((post) => {
@@ -123,11 +129,8 @@ exports.deleteMessage = (req, res, next) => {
 };
 
 exports.likeMessage = (req, res, next) => {
-  let likes = req.body.likes
-  let userId = req.body.userId
-  let postId = req.params.id
 
-  Post.updateOne({ _id: postId }, { $push: { usersLiked: userId }, $inc: { likes: +1 }}) 
+  Post.updateOne({ _id: req.params.id }, { $push: { usersLiked: req.body.userId }, $inc: { likes: +1 }}) 
     .then(() => res.status(200).json({ message: 'Like.' }))
     .catch((error) => res.status(400).json({ error }))
 }

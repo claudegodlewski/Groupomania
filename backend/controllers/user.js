@@ -1,8 +1,21 @@
+/*
+  Package de chiffrement bcrypt.
+    Source: https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466506-creez-des-utilisateurs
+*/
 const bcrypt = require ('bcrypt');
+
+/*
+  Package de gestion des tokens JSON.
+    Source: https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466557-creez-des-tokens-dauthentification
+*/
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const env = require('dotenv').config();
 
+/*
+  Exportation des méthodes et attribution aux routes.
+   Source: https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466459-optimisez-la-structure-du-back-end
+*/
 exports.signup = (req, res, next) => {
   // Salage du mot de passe 10 fois.
     bcrypt.hash(req.body.password, 10)
