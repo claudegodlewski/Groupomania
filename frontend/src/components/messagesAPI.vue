@@ -125,14 +125,14 @@ export default {
   <div class="container">
     <article class="card" v-for="post in posts" :key="post._id">
       <header class="cardHeader">
-        <p class="cardSystemUser">
-          {{ post.systemUser }}
-        </p>
+        <div class="cardSystemUser">
+         Auteur: {{ post.systemUser }}
+        </div>
         <p class="cardDateHeure">
-          {{ post.dateHeure }}
+         Date: {{ post.dateHeure }}
         </p>
       </header>
-      <p class="cardContent" v-show="post.text">{{ post.text }}</p>
+      <p class="cardContent" v-show="post.text">Message: {{ post.text }}</p>
       <img :src="post.imageUrl" alt= 'Image postée' class= "cardPicture"/>
       <footer>
         <span class="likesNombre">{{post.likes}} likes</span>

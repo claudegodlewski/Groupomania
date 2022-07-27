@@ -52,18 +52,19 @@ export default {
 <template>
   <div class="formulaireContenu">
     <form class="form" action="/" method="post">
-      <div>
-          <label htmlFor="mail">E-mail:
+      <fieldset>
+        <legend>Identifiez-vous</legend>
+          <div>
+            <label for="email">E-mail:</label>
             <input type="email" id="email" name="email" v-model="email">
-          </label>
-      </div>
-      <div>
-          <label htmlFor="password">Mot de passe:
+          </div>
+          <div>
+            <label for="password">Mot de passe:</label>
             <input type="password" id="password" name="password" v-model="password">
-          </label>
-      </div>
-      <div v-show="error" class="error">{{ errorMsg }}</div>
-      <button @click.prevent="loginUtilisateur()" type="submit" class="button">Valider</button>
+          </div>
+          <div v-show="error" class="error">{{ errorMsg }}</div>
+          <button @click.prevent="loginUtilisateur()" type="submit" class="button">Valider</button>
+      </fieldset>
     </form>
   </div>
 </template>
@@ -100,6 +101,7 @@ input {
   border-radius: 0px;
   border: 1px solid #9E9E9E;
   background-color: #FFD7D7;
+  width: 90%;
 }
 button {
   background: $color-primary;

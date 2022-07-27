@@ -38,8 +38,4 @@ nav a {
   margin: 10px;
   border-radius: 25px;
 }
-nav a.router-link-exact-active {
-  background-color: #FD2D01;
-  color: #FFFFFF;
-}
 </style>

@@ -73,12 +73,12 @@ export default {
     <div class="container">
       <h3>Créer une publication:</h3>
     <div class="post">
-      <div class="postSystemUser">Laissez libre cours à votre imagination ici.</div>
+      <label for="text" class="postSystemUser">Laissez libre cours à votre imagination ici.</label>
       <textarea
-        aria-label="titre de la publication"
-        type="title"
-        id="title"
-        name="title"
+        aria-label="Texte de la publication"
+        type="text"
+        id="text"
+        name="text"
         v-model="text"
         maxlength="600"
         @input="check"

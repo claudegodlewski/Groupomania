@@ -89,7 +89,7 @@ export default {
       <div class="edit">
         <section>
           <p class="nouveauTexte">Veuillez écrire un texte ci-dessous:</p>
-            <textarea v-model="editedText" type="text" aria-label="titre du post"/>
+            <textarea v-model="editedText" type="text" aria-label="Texte de la publication"/>
               <footer class="editPied">
                 <button class="validerBouton" @click="localStorageUpdateText">
                   Je remplace le texte
