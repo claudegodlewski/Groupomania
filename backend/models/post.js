@@ -16,7 +16,7 @@ const postSchema = mongoose.Schema({
   text: { type: String, trim: true, maxlenght: 500 },
   imageUrl: { type: String, required: true },
   likes: { type: Number, default: 0, required: true },
-  usersLiked: { type: [String], required: true },
+  usersLiked: { type: Array, default: [], required: true }
 });
 
 module.exports = mongoose.model('Post', postSchema);

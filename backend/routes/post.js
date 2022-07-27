@@ -7,7 +7,6 @@ Importation des middlewares et du contrôleur.
 const auth = require('../middlewares/auth');
 const multer = require('../middlewares/multer-config');
 const postCtrl = require('../controllers/post');
-// const idSecurity = require('../middlewares/idSecurity');
 
 /*
 Méthode "express.router()": permet de créer un routeur pour les routes de l'application.
