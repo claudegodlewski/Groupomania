@@ -141,7 +141,7 @@ exports.deleteMessage = (req, res, next) => {
 //     .catch((error) => res.status(400).json({ error: error }))
 // }
 
-exports.likeMessage = (req, res, next) => {
+exports.likeMessage = (req, res) => {
 
   const token = req.headers.authorization.split(' ')[1];
   const decodedToken = jwt.verify(token, process.env.secretToken);
@@ -149,7 +149,7 @@ exports.likeMessage = (req, res, next) => {
 
   Post.findOne({ _id: req.params.id }).then((a)=>{
 
-    if (a.usersLiked.includes(idOfTheUser)) // Sécurité: si userLiked contient l'ID de l'utilisateur, alors stopper éxécution.
+    if (a.usersLiked.includes(idOfTheUser)) // Sécurité: si userLiked contient l'ID de l'utilisateur,  alors stopper éxécution.
 
       return;
               
