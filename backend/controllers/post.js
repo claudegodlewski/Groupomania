@@ -141,7 +141,7 @@ exports.deleteMessage = (req, res, next) => {
 //     .catch((error) => res.status(400).json({ error: error }))
 // }
 
-exports.likeMessage = (req, res) => {
+exports.likeMessage = (req, res, next) => {
 
   const token = req.headers.authorization.split(' ')[1];
   const decodedToken = jwt.verify(token, process.env.secretToken);
