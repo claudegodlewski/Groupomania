@@ -128,14 +128,44 @@ exports.deleteMessage = (req, res, next) => {
     })
 };
 
+// # Code obsolète (permet de voter plusieurs fois) #
+// exports.likeMessage = (req, res, next) => {
+//   // MAJ base de donnée.
+//   Post.updateOne(
+//     { _id: req.params.id }, 
+//     { $inc: { likes: 1 }, // $inc: incrémentation du champ "likes" (1 dans la BDD).
+//       $push: { usersLiked: req.body.userId } // $push: ajout du 'userId' dans le champs "usersLiked" de la BDD.
+//     }
+//   )
+//     .then(() => res.status(200).json({ message: 'La publication a été aimée.' }))
+//     .catch((error) => res.status(400).json({ error: error }))
+// }
+
 exports.likeMessage = (req, res, next) => {
-  // MAJ base de donnée.
-  Post.updateOne(
-    { _id: req.params.id }, 
-    { $inc: { likes: 1 }, // $inc: incrémentation du champ "likes" (1 dans la BDD).
-      $push: { usersLiked: req.body.userId } // $push: ajout du 'userId' dans le champs "usersLiked" de la BDD.
-    }
-  )
-    .then(() => res.status(200).json({ message: 'La publication a été aimée.' }))
-    .catch((error) => res.status(400).json({ error: error }))
-}
+
+  const token = req.headers.authorization.split(' ')[1];
+  const decodedToken = jwt.verify(token, process.env.secretToken);
+  const idOfTheUser = decodedToken.userId;
+
+  Post.findOne({ _id: req.params.id }).then((a)=>{
+
+    if (a.usersLiked.includes(idOfTheUser)) // Sécurité: si userLiked contient l'ID de l'utilisateur, alors stopper éxécution.
+
+      return;
+              
+          {
+
+              Post.updateOne(
+                  { _id: req.params.id }, 
+                  { $inc: { likes: 1 }, // $inc: incrémentation du champ "likes" (1 dans la BDD).
+                      $push: { usersLiked: req.body.userId } // $push: ajout du 'userId' dans le champs "usersLiked" de la BDD.
+                  }
+              )
+                  .then(() => res.status(200).json({ message: 'La publication a été aimée.' }))
+                  .catch((error) => res.status(400).json({ error }))
+      
+          } 
+
+      });
+
+};
