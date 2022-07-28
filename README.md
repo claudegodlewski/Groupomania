@@ -33,6 +33,8 @@
 
 <p>Créez un fichier appelé <b>.env</b> avec le contenu suivant:</p>
 
+<br>
+
 <p>User='Votre login sur MongoDB Atlas'</p>
 <p>Password='Votre password sur MongoDB Atlas'</p>
 <p>Cluster='Votre cluster sur MongoDB Atlas (exemple: "cluster0-pme76")'</p>
@@ -40,6 +42,7 @@
 
 <br>
 
+<p>Une fois le fichier <b>.env</b> créé, écrivez la commande ci-dessous:</p>
 <p>npm install && nodemon server</p>
 
 <br>
@@ -55,8 +58,7 @@
 
 <h3>Connexion</h3>
 
-<p>Une page de connexion permettant à l’utilisateur de se connecter, ou bien</p>
-de créer un compte s’il n’en possède pas.</p>
+<p>Une page de connexion permettant à l’utilisateur de se connecter, ou bien de créer un compte s’il n’en possède pas.</p>
 <p>Un utilisateur doit avoir la possibilité de se déconnecter.</p>
 <p>La session de l’utilisateur persiste pendant qu’il est connecté.</p>
 <p>Les données de connexion doivent être sécurisées.</p>
