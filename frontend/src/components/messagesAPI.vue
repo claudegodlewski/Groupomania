@@ -166,7 +166,7 @@ export default {
     width: 75%;
 }
   @media (max-width: 809px) {
-    width: 70%;
+    width: 94%;
 }
   background-color: white;
   color: black;
