@@ -9,7 +9,7 @@
 <h2>Stack</h2>
 
 <p>L'application a été conçue avec la stack MEVN (MongoDB, Express, Vue.js, et Node.js).</p>
-<p>Les données sont stockées via le service de DBaaS (base de données en tant que service) "MongoDB Atlas".</p>
+<p>Les données sont stockées via MongoDB Atlas (DBaaS: base de données en tant que service).</p>
 
 <br>
 
