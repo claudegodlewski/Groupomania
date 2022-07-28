@@ -107,6 +107,9 @@ export default {
           :disabled="isDisabled">
           Valider
         </button>
+          <router-link to="/home">
+            <button type="submit" class="retourBouton">Retour</button>
+          </router-link>
       </div>
     </div>
   </div>
@@ -186,7 +189,18 @@ textarea {
   border-radius: 25px;
   height: 30px;
   width: 70px;
-  margin: auto;
+  margin: 10px;
+}
+.retourBouton {
+  background-color: white;
+  font-family: Lato, Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  border: white;
+  color: #FD2D01;
+  border-radius: 25px;
+  height: 30px;
+  width: 70px;
+  margin: 10px;
 }
 .fichierSelection {
   margin-bottom: 10px;

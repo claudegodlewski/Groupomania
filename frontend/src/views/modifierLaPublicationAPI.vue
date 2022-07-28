@@ -110,6 +110,9 @@ export default {
               </button>
             </footer>
       </div>
+        <router-link to="/home">
+          <button type="submit" class="retourBouton">Retour</button>
+        </router-link>
     </div>
   </div>
 </template>
@@ -204,5 +207,16 @@ textarea {
   background-color: #FFD7D7;
   width:270px;
   border-radius: 5px;
+}
+.retourBouton {
+  background-color: white;
+  font-family: Lato, Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  border: white;
+  color: #FD2D01;
+  border-radius: 25px;
+  height: 30px;
+  width: 70px;
+  margin: auto;
 }
 </style>
