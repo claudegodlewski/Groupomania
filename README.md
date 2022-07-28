@@ -35,8 +35,8 @@
 
 <br>
 
-<p>User='Votre login sur MongoDB Atlas'</p>
-<p>Password='Votre password sur MongoDB Atlas'</p>
+<p>User='Votre identifiant sur MongoDB Atlas'</p>
+<p>Password='Votre mot de passe sur MongoDB Atlas'</p>
 <p>Cluster='Votre cluster sur MongoDB Atlas (exemple: "cluster0-pme76")'</p>
 <p>secretToken='RANDOM_TOKEN_SECRET'</p>
 
@@ -49,9 +49,10 @@
 
 <h2>Installation automatisée (facultatif)</h2>
 
-<p>Si votre système d'information est <b>Debian</b>, vous pouvez utiliser le script suivant</b>:</p>
+<p>Si votre système d'exploitation est <b>Debian</b>, vous pouvez utiliser le script suivant</b>:</p>
 <a href="https://github.com/claudegodlewski/Misc/blob/main/P7installation" target="_blank">P7installation</a>
 
+<br>
 <br>
 
 <h2>Spécifications fonctionnelles</h2>
@@ -65,7 +66,8 @@
 
 <h3>Accueil</h3>
 
-<p>Messages listés de façon antéchronologique.</p>
+<p>Doit lister les messages créés par les différents utilisateurs</p>
+<p>Messages affichés du plus récent au plus ancien.</p>
 
 <h3>Messages</h3>
 
@@ -80,3 +82,4 @@
 <h3>Administration</h3>
 
 <p>Créer un compte d'administrateur: pouvoir de modification et de suppression des messages.</p>
+<p>Fournir les identifiants de l'administrateur.</p>
