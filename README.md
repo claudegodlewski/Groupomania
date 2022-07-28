@@ -20,13 +20,13 @@
 
 <br>
 
-<p><b>Etape 2</b>: installez le frontend</p>
+<p><b>Etape 2</b>: initialisez le frontend</p>
 <p>cd Groupomania/frontend</p>
 <p>npm install && npm install sass-loader -D && npm install node-sass -D && npm run serve</p>
 
 <br>
 
-<p><b>Etape 3</b>: installez le backend</p>
+<p><b>Etape 3</b>: initialisez le backend</p>
 <p>cd Groupomania/backend</p>
 
 <br>
