@@ -39,6 +39,7 @@
 <p>Password='Votre mot de passe sur MongoDB Atlas'</p>
 <p>Cluster='Votre cluster sur MongoDB Atlas (exemple: "cluster0-pme76")'</p>
 <p>secretToken='RANDOM_TOKEN_SECRET'</p>
+<p>secretEmail='EMAIL_TOKEN_SECRET'<p>
 
 <br>
 
