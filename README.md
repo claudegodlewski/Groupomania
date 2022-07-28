@@ -22,7 +22,7 @@
 
 <p><b>Etape 2</b>: initialisez le frontend</p>
 <p>cd Groupomania/frontend</p>
-<p>npm install && npm install sass-loader -D && npm install node-sass -D && npm run serve</p>
+<p>npm install && npm run serve</p>
 
 <br>
 
