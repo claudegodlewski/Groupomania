@@ -185,7 +185,7 @@ export default {
 .cardSystemUser {
   display: flex;
   align-items: center;
-  padding: 10px 10px 0 10px;
+  padding: 5px;
   font-weight: normal;
   margin-top:0px;
   margin-bottom: 10px;
@@ -193,7 +193,7 @@ export default {
 .cardDateHeure {
   display: flex;
   align-items: center;
-  padding: 10px 10px 0 10px;
+  padding: 5px;
   font-weight: normal;
   margin-top:0px;
   margin-bottom: 10px;
