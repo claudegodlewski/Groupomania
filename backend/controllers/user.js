@@ -9,6 +9,9 @@ const bcrypt = require ('bcrypt');
     Source: https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466557-creez-des-tokens-dauthentification
 */
 const jwt = require('jsonwebtoken');
+
+const CryptoJS = require('crypto-js');
+
 const User = require('../models/user');
 const env = require('dotenv').config();
 
@@ -17,13 +20,14 @@ const env = require('dotenv').config();
    Source: https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466459-optimisez-la-structure-du-back-end
 */
 exports.signup = (req, res, next) => {
+  const emailChiffre = CryptoJS.RIPEMD160(req.body.email, process.env.secretEmail).toString();
   // Salage du mot de passe 10 fois.
     bcrypt.hash(req.body.password, 10)
       .then(hash => {
         const user = new User({
           systemAdministrator: false,
           systemUser: req.body.systemUser,
-          email: req.body.email,
+          email: emailChiffre,
           password: hash, 
         });
         user.save()
@@ -34,7 +38,8 @@ exports.signup = (req, res, next) => {
   };
 
 exports.login = (req, res, next) => {
-  User.findOne({ email: req.body.email })
+  const emailChiffre = CryptoJS.RIPEMD160(req.body.email, process.env.secretEmail).toString();
+  User.findOne({ email: emailChiffre })
     .then(user => {
       if (!user) {
         return res.status(401).json({ error: 'Utilisateur non trouvé.' });
