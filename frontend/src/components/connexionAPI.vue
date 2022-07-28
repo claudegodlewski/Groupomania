@@ -53,7 +53,7 @@ export default {
   <div class="formulaireContenu">
     <form class="form" action="/" method="post">
       <fieldset>
-        <legend>Identifiez-vous</legend>
+        <legend>Connectez-vous</legend>
           <div>
             <label for="email">E-mail:</label>
             <input type="email" id="email" name="email" v-model="email">
