@@ -8,8 +8,8 @@
           <!-- "router-link" (pas de rafraichissement de la page: SPA) -->
           <!-- https://vueschool.io/articles/vuejs-tutorials/how-to-use-vue-router-a-complete-tutorial -->
           <!-- https://openclassrooms.com/fr/courses/6390311-creez-une-application-web-avec-vue-js/6863526-gerez-la-navigation-de-votre-application-avec-le-routeur-vue -->
-          <router-link to="/">Se connecter</router-link>
-          <router-link to="/signup">Créer un compte</router-link>
+          <router-link to="/">Connexion</router-link>
+          <router-link to="/signup">Inscription</router-link>
         </nav>
   </div>
 </template>
